@@ -17,11 +17,9 @@ add_rules("mode.release")
 
 
 -- 运行库
-add_cxflags("/MD")
-
-
--- 警告屏蔽
-add_cxflags("/wd4819")
+if is_os("windows") then
+    add_cxflags("/MD")
+end
 
 
 -- 指令集启用
@@ -34,7 +32,7 @@ end
 
 
 -- 导入头文件
-add_includedirs("D:\\Libs\\HeaderOnly\\cinatra-0.9.2\\include")
+add_includedirs("./cinatra/include") -- 0.9.2
 
 
 -- 语言版本
