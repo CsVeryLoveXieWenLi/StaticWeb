@@ -1,7 +1,7 @@
 ﻿/*
  * @Author: CsVeryLoveXieWenLi
  * @Date: 2024-07-24 13:35:16
- * @LastEditTime: 2024-07-24 18:52:24
+ * @LastEditTime: 2024-07-24 20:44:23
  * @Description:主入口
  * @Sign: 有些故事，总是美妙又缥缈，郁郁不得终。
  * Copyright (c) 2024 by CsVeryLoveXieWenLi, All Rights Reserved.
@@ -9,8 +9,12 @@
 
 // #define CINATRA_ENABLE_GZIP   1
 // #define CINATRA_ENABLE_BROTLI 1
+
+#ifdef _WIN32
 #define _WIN32_WINNT 0x0601
-#define BUFFER_SIZE  1024 * 100
+#endif
+
+#define BUFFER_SIZE 1024 * 100
 
 
 #include <cinatra.hpp>
@@ -35,20 +39,24 @@ async_simple::coro::Lazy<void> sends(coro_http_response& response, std::filesyst
 
     // Open
     coro_io::coro_file file{};
-    file.open(_path, std::ios::binary);
+    file.open(_path, std::ios::in);
 
 
     // Read And Send
     bool        ok;
     bool        end;
     std::string buffer;
+    std::string content;
 
     // reserve
     buffer.reserve(BUFFER_SIZE);
 
     // start
     ok = co_await response.get_conn()->begin_chunked();
-    if (!ok) co_return;
+    if (!ok) {
+        file.close();
+        co_return;
+    }
 
     // read
     while (true) {
@@ -57,7 +65,10 @@ async_simple::coro::Lazy<void> sends(coro_http_response& response, std::filesyst
         end = file.eof();
         ok  = co_await response.get_conn()->write_chunked(std::string_view(buffer.data(), size), end);
 
-        if (!ok || end) co_return;
+        if (!ok || end) {
+            file.close();
+            co_return;
+        }
     }
 }
 
