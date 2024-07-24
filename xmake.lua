@@ -24,10 +24,13 @@ end
 
 -- 指令集启用
 if is_arch("arm.*") then
-    aadd_vectorexts("neon")
+    add_vectorexts("neon")
 
-elseif is_os("x86_64") then
-    aadd_vectorexts("sse4.2")
+elseif is_arch("x64") or is_arch("x86_x64") then
+    add_vectorexts("sse4.2")
+
+elseif is_arch("x86") then
+    add_vectorexts("avx2")
 end
 
 

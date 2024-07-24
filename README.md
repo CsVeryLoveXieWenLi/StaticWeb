@@ -5,6 +5,13 @@
 - **开源协议：MIT。**
 
 
+## 使用
+
+- 前往Release下载适合的发布版本
+
+- 命令: StaticWeb [thread_num] [host] [port] [static_dir]
+
+
 ## 引用
 
 - https://github.com/qicosmos/cinatra
