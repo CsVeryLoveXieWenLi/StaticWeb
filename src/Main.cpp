@@ -1,8 +1,8 @@
 ﻿/*
  * @Author: CsVeryLoveXieWenLi
  * @Date: 2024-07-24 13:35:16
- * @LastEditTime: 2024-07-24 20:44:23
- * @Description:主入口
+ * @LastEditTime: 2024-07-24 21:41:15
+ * @Description: 主入口
  * @Sign: 有些故事，总是美妙又缥缈，郁郁不得终。
  * Copyright (c) 2024 by CsVeryLoveXieWenLi, All Rights Reserved.
  */
@@ -46,7 +46,6 @@ async_simple::coro::Lazy<void> sends(coro_http_response& response, std::filesyst
     bool        ok;
     bool        end;
     std::string buffer;
-    std::string content;
 
     // reserve
     buffer.reserve(BUFFER_SIZE);
