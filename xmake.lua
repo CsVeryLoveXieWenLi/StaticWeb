@@ -45,6 +45,7 @@ target("StaticWeb")
     add_files("src/*.cpp")
 
     set_strip("all")
+    set_symbols("hidden")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
