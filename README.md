@@ -1,21 +1,24 @@
 <!--
  * @Author: CsVeryLoveXieWenLi
  * @Date: 2024-07-24 18:55:32
- * @LastEditTime: 2024-07-24 21:28:45
+ * @LastEditTime: 2024-08-08 11:59:43
  * @Description: 
  * @Sign: 有些故事，总是美妙又缥缈，郁郁不得终。
  * Copyright (c) 2024 by CsVeryLoveXieWenLi, All Rights Reserved.
 -->
+
 ## 极简 静态网页服务端
 
-- **非正常开源项目，仅自用！**
+- ~**非正常开源项目，仅自用！**~
 
 - **开源协议：MIT。**
 
 
 ## 使用
 
-- 前往Release下载适合的发布版本
+- 前往Actions下载适合的发布版本
+
+- Arm64、Arm，不可用
 
 - 命令: StaticWeb [thread_num] [host] [port] [static_dir]
 

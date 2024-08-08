@@ -1,0 +1,202 @@
+# Release Build
+
+name: ReleaseBuild
+
+
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+  Windows-x64:
+    runs-on: windows-2022
+    if: "contains(github.event.head_commit.message, 'Release')"
+
+
+    steps:
+    - name: 安装Msbuild
+      uses: microsoft/setup-msbuild@v2
+      with:
+        msbuild-architecture: x64
+
+    - name: 安装Xmake
+      uses: xmake-io/github-action-setup-xmake@v1
+      with:
+        xmake-version: latest
+
+    - name: 检出源代码
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: 编译
+      run: xmake
+
+    - name: 上传
+      uses: actions/upload-artifact@v4
+      with:
+        name: Windows-x64
+        path: build/
+
+
+  Windows-x86:
+    runs-on: windows-2022
+    if: "contains(github.event.head_commit.message, 'Release')"
+
+
+    steps:
+    - name: 安装Msbuild
+      uses: microsoft/setup-msbuild@v2
+      with:
+        msbuild-architecture: x86
+
+    - name: 安装Xmake
+      uses: xmake-io/github-action-setup-xmake@v1
+      with:
+        xmake-version: latest
+
+    - name: 检出源代码
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: 编译
+      run: |
+        xmake f -a x86
+        xmake
+
+    - name: 上传
+      uses: actions/upload-artifact@v4
+      with:
+        name: Windows-x86
+        path: build/
+
+
+  Linux-x64:
+    runs-on: ubuntu-22.04
+    if: "contains(github.event.head_commit.message, 'Release')"
+
+
+    steps:
+    - name: 安装Gcc
+      uses: egor-tensin/setup-gcc@v1
+      with:
+        version: latest
+        platform: x64
+
+    - name: 安装Xmake
+      uses: xmake-io/github-action-setup-xmake@v1
+      with:
+        xmake-version: latest
+
+    - name: 检出源代码
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: 编译
+      run: xmake
+
+    - name: 上传
+      uses: actions/upload-artifact@v4
+      with:
+        name: Linux-x64
+        path: build/
+
+
+  Linux-x86:
+    runs-on: ubuntu-22.04
+    if: "contains(github.event.head_commit.message, 'Release')"
+
+
+    steps:
+    - name: 安装Gcc
+      uses: egor-tensin/setup-gcc@v1
+      with:
+        version: latest
+        platform: x86
+
+    - name: 安装Xmake
+      uses: xmake-io/github-action-setup-xmake@v1
+      with:
+        xmake-version: latest
+
+    - name: 检出源代码
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: 编译
+      run: |
+        xmake f -a x86
+        xmake
+
+    - name: 上传
+      uses: actions/upload-artifact@v4
+      with:
+        name: Linux-x86
+        path: build/
+
+
+  Linux-Arm64:
+    runs-on: ubuntu-24.04
+    if: "contains(github.event.head_commit.message, 'Release')"
+
+
+    steps:
+    - name: 安装Gcc
+      run: sudo apt install -y g++-aarch64-linux-gnu
+
+    - name: 安装Xmake
+      uses: xmake-io/github-action-setup-xmake@v1
+      with:
+        xmake-version: latest
+
+    - name: 检出源代码
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: 编译
+      run: |
+        xmake f -a arm64
+        xmake
+
+    - name: 上传
+      uses: actions/upload-artifact@v4
+      with:
+        name: Linux-Arm64
+        path: build/
+
+
+  Linux-Arm:
+    runs-on: ubuntu-24.04
+    if: "contains(github.event.head_commit.message, 'Release')"
+
+
+    steps:
+    - name: 安装Gcc
+      run: sudo apt install g++-arm-linux-gnueabi
+
+    - name: 安装Xmake
+      uses: xmake-io/github-action-setup-xmake@v1
+      with:
+        xmake-version: latest
+
+    - name: 检出源代码
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: 编译
+      run: |
+        xmake f -a arm
+        xmake
+
+    - name: 上传
+      uses: actions/upload-artifact@v4
+      with:
+        name: Linux-Arm
+        path: build/
